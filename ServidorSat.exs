@@ -1,7 +1,7 @@
 defmodule ServidorSAT do
   @nodo_remoto :nodo_cliente@localhost
   @csv_file "resultados.csv"
-  
+
   def iniciar() do
     # Registrar el tiempo de inicio
     inicio = :os.system_time(:millisecond)
@@ -39,8 +39,23 @@ defmodule ServidorSAT do
 
   # Guardar los datos en un archivo CSV
   defp guardar_en_csv(algoritmo, tiempo) do
-    contenido = "#{algoritmo},#{tiempo}\n"
-    File.write!(@csv_file, contenido, [:append])
+    # Leer contenido existente del archivo
+    contenido_actual =
+      if File.exists?(@csv_file) do
+        File.read!(@csv_file)
+        |> String.split("\n", trim: true)
+      else
+        []
+      end
+
+    # Actualizar o agregar la nueva entrada
+    contenido_actualizado =
+      contenido_actual
+      |> Enum.reject(fn linea -> String.starts_with?(linea, "#{algoritmo},") end)
+      |> Kernel.++(["#{algoritmo},#{tiempo}"])
+
+    # Escribir el contenido actualizado al archivo
+    File.write!(@csv_file, Enum.join(contenido_actualizado, "\n"))
   end
 
   defp recibir_resultados(0), do: :ok
