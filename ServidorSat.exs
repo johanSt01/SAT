@@ -1,6 +1,7 @@
 defmodule ServidorSAT do
   @nodo_remoto :nodo_cliente@localhost
-
+  @csv_file "resultados.csv"
+  
   def iniciar() do
     # Registrar el tiempo de inicio
     inicio = :os.system_time(:millisecond)
@@ -31,6 +32,15 @@ defmodule ServidorSAT do
     # Calcular el tiempo total de ejecución
     duracion_total = :os.system_time(:millisecond) - inicio
     IO.puts("Tiempo total de ejecución distribuida: #{duracion_total} ms")
+
+    # Guardar el tiempo de ejecución en el CSV
+    guardar_en_csv("Distribuida", duracion_total)
+  end
+
+  # Guardar los datos en un archivo CSV
+  defp guardar_en_csv(algoritmo, tiempo) do
+    contenido = "#{algoritmo},#{tiempo}\n"
+    File.write!(@csv_file, contenido, [:append])
   end
 
   defp recibir_resultados(0), do: :ok

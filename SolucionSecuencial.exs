@@ -1,4 +1,6 @@
 defmodule SolucionadorSAT do
+  @csv_file "resultados.csv"
+
   def main() do
     # Registrar tiempo de inicio
     inicio = :os.system_time(:millisecond)
@@ -12,6 +14,15 @@ defmodule SolucionadorSAT do
     # Registrar tiempo de fin y calcular tiempo total
     duracion_total = :os.system_time(:millisecond) - inicio
     IO.puts("Tiempo total de ejecución: #{duracion_total} ms")
+
+    # Guardar el tiempo de ejecución en el CSV
+    guardar_en_csv("Secuencial", duracion_total)
+  end
+
+  # Guardar los datos en un archivo CSV
+  defp guardar_en_csv(algoritmo, tiempo) do
+    contenido = "#{algoritmo},#{tiempo}\n"
+    File.write!(@csv_file, contenido, [:append])
   end
 
   # Procesar cada archivo y medir el tiempo
