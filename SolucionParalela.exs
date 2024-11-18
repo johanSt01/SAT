@@ -17,7 +17,7 @@ defmodule SolucionadorSAT do
     IO.puts("Tiempo total de ejecución: #{duracion_total} ms")
 
     # Guardar el tiempo de ejecución en el CSV
-    #guardar_en_csv("Paralela", duracion_total)
+    guardar_en_csv("Paralela", duracion_total)
   end
 
   # Guardar los datos en un archivo CSV
