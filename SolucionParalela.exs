@@ -17,7 +17,7 @@ defmodule SolucionadorSAT do
     IO.puts("Tiempo total de ejecución: #{duracion_total} ms")
 
     # Guardar el tiempo de ejecución en el CSV
-    guardar_en_csv("Paralela", duracion_total)
+    #guardar_en_csv("Paralela", duracion_total)
   end
 
   # Guardar los datos en un archivo CSV
@@ -130,29 +130,6 @@ defmodule SolucionadorSAT do
         variable not in asignacion and -variable not in asignacion
       end)
     end)
-  end
-end
-
-# Clase para imprimir resultados
-defmodule ImpresoraResultados do
-  def imprimir(ruta_archivo, {:satisfactible, soluciones}) do
-    IO.puts("Archivo: #{ruta_archivo}")
-    IO.puts("Resultado: Satisfactible")
-
-    soluciones
-    |> Enum.each(&IO.puts("Solución: #{inspect(formatear_como_binario(&1))}"))
-  end
-
-  def imprimir(ruta_archivo, {:insatisfactible, _}) do
-    IO.puts("Archivo: #{ruta_archivo}")
-    IO.puts("Resultado: Insatisfactible")
-  end
-
-  # Formatear solución como binario
-  defp formatear_como_binario(solucion) do
-    for i <- 1..20 do
-      if i in solucion, do: 1, else: 0
-    end
   end
 end
 
